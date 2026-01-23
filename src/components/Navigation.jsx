@@ -56,7 +56,7 @@ function Navigation() {
             <span className={`text-xl font-bold transition-colors duration-300 tracking-tight ${
               isScrolled ? 'text-[#1e3a8a]' : 'text-white'
             }`}>
-              Lapirenov
+              Lapi Renov
             </span>
           </Link>
 

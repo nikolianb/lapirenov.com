@@ -15,7 +15,7 @@ function Footer() {
               <div className="w-10 h-10 bg-gradient-to-br from-[#d4af37] to-amber-600 rounded-lg flex items-center justify-center shadow-lg">
                 <span className="text-white font-bold text-xl">L</span>
               </div>
-              <span className="text-xl font-bold">Lapirenov</span>
+              <span className="text-xl font-bold">Lapi Renov</span>
             </div>
             <p className="text-blue-100 leading-relaxed">
               Votre partenaire expert en rénovation de façades et traitement des murs. Qualité et savoir-faire traditionnel.
@@ -115,7 +115,7 @@ function Footer() {
                 TVA: FR55 995099702<br />
                 RCS Bourg-en-Bresse<br />
                 Code NAF/APE: 4329A<br />
-                Forme juridique: SARL<br />
+                Forme juridique: EURL<br />
                 Immatriculation: 01/01/2026<br />
                 Commune: Saint-Denis-les-Bourg (Ain)
               </p>
