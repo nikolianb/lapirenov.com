@@ -6,6 +6,11 @@ import { projectsData } from '@/data/projectData';
 import ProjectModal from '@/components/ProjectModal';
 import { Button } from '@/components/ui/button';
 import Breadcrumb from '@/components/Breadcrumb';
+import BeforeAfterSlider from '@/components/BeforeAfterSlider';
+import before1 from '@/images/before1.jpg';
+import after1 from '@/images/after1.jpg';
+import before2 from '@/images/before2.jpg';
+import after2 from '@/images/after2.jpg';
 
 function Portfolio() {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -75,6 +80,36 @@ function Portfolio() {
         </section>
         
         <Breadcrumb pageName="Portfolio" />
+
+        {/* Before / After Section */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
+            <div>
+              <p className="text-sm font-semibold text-[#d4af37] uppercase tracking-wider mb-2">
+                Avant / Après
+              </p>
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a8a]">
+                La transformation en un coup d'œil
+              </h2>
+              <p className="text-gray-600 mt-3 max-w-2xl">
+                Faites glisser le curseur pour comparer le résultat avant et après rénovation.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <BeforeAfterSlider
+              title="Projet 1"
+              beforeImage={before1}
+              afterImage={after1}
+            />
+            <BeforeAfterSlider
+              title="Projet 2"
+              beforeImage={before2}
+              afterImage={after2}
+            />
+          </div>
+        </section>
 
         {/* Filter and Search Section */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
