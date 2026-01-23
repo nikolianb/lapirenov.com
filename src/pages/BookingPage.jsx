@@ -8,8 +8,26 @@ function BookingPage() {
   return (
     <>
       <Helmet>
-        <title>Réserver une Consultation | Lapirenov</title>
-        <meta name="description" content="Réservez votre consultation gratuite avec les experts de Lapirenov. Discutez de votre projet et obtenez un devis personnalisé." />
+        <title>Reservation consultation | Lapi Renov</title>
+        <meta
+          name="description"
+          content="Reservez une consultation gratuite avec Lapi Renov pour votre projet de renovation a Saint-Denis-les-Bourg (Ain)."
+        />
+        <meta property="og:title" content="Reservation consultation | Lapi Renov" />
+        <meta
+          property="og:description"
+          content="Reservez une consultation gratuite avec Lapi Renov pour votre projet de renovation a Saint-Denis-les-Bourg (Ain)."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Lapi Renov" />
+        <meta property="og:locale" content="fr_FR" />
+        <meta property="og:url" content="https://lapirenov.com/booking" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Reservation consultation | Lapi Renov" />
+        <meta
+          name="twitter:description"
+          content="Reservez une consultation gratuite avec Lapi Renov pour votre projet de renovation a Saint-Denis-les-Bourg (Ain)."
+        />
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">

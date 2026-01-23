@@ -6,8 +6,12 @@ function BookingConfirmationPage() {
   return (
     <>
       <Helmet>
-        <title>Confirmation de Réservation | Lapirenov</title>
-        <meta name="description" content="Votre consultation avec Lapirenov a été réservée avec succès. Nous vous contacterons bientôt." />
+        <title>Confirmation de reservation | Lapi Renov</title>
+        <meta
+          name="description"
+          content="Votre consultation avec Lapi Renov a ete reservee avec succes. Nous vous contacterons bientot."
+        />
+        <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
       <BookingConfirmation />

@@ -23,9 +23,9 @@ const services = [
   },
   {
     id: 4,
-    title: "Enduit à la chaux",
-    image: "https://images.unsplash.com/photo-1633537066008-85db24f0a45f?auto=format&fit=crop&w=900&q=80",
-    description: "Application traditionnelle d'enduits à la chaux pour laisser respirer vos murs tout en les protégeant."
+    title: "Enduit/Peinture Interieure",
+    image: "https://images.pexels.com/photos/30754633/pexels-photo-30754633.jpeg?cs=srgb&dl=pexels-arturoaez225-30754633.jpg&fm=jpg",
+    description: "Finitions interieures soignees avec enduits lisses et peintures durables pour des murs parfaitement homogenes."
   },
   {
     id: 5,

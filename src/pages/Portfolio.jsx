@@ -89,8 +89,26 @@ function Portfolio() {
   return (
     <>
       <Helmet>
-        <title>Portfolio - Nos Réalisations | Lapirenov</title>
-        <meta name="description" content="Découvrez nos réalisations de rénovation : façades, traitements de murs, enduits et isolation. Lapirenov sublime votre habitat." />
+        <title>Portfolio | Lapi Renov - Renovation de facades</title>
+        <meta
+          name="description"
+          content="Decouvrez les realisations Lapi Renov : facades, traitements de murs, enduits et isolation a Saint-Denis-les-Bourg (Ain)."
+        />
+        <meta property="og:title" content="Portfolio | Lapi Renov - Renovation de facades" />
+        <meta
+          property="og:description"
+          content="Decouvrez les realisations Lapi Renov : facades, traitements de murs, enduits et isolation a Saint-Denis-les-Bourg (Ain)."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Lapi Renov" />
+        <meta property="og:locale" content="fr_FR" />
+        <meta property="og:url" content="https://lapirenov.com/portfolio" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Portfolio | Lapi Renov - Renovation de facades" />
+        <meta
+          name="twitter:description"
+          content="Decouvrez les realisations Lapi Renov : facades, traitements de murs, enduits et isolation a Saint-Denis-les-Bourg (Ain)."
+        />
       </Helmet>
 
       <div className="min-h-screen bg-gray-50">
