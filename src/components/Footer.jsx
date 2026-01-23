@@ -38,7 +38,7 @@ function Footer() {
               </a>
               <div className="flex items-start space-x-3">
                 <Mail className="w-5 h-5 text-[#d4af37] mt-0.5 flex-shrink-0" />
-                <p className="text-blue-100">contact@lapirenov.fr</p>
+                <p className="text-blue-100">info@lapirenov.fr</p>
               </div>
               <div className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 text-[#d4af37] mt-0.5 flex-shrink-0" />

@@ -1,7 +1,7 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Grid, Layout } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import { projectsData } from '@/data/projectData';
 import ProjectModal from '@/components/ProjectModal';
 import { Button } from '@/components/ui/button';
@@ -12,11 +12,25 @@ import after1 from '@/images/after1.jpg';
 import before2 from '@/images/before2.jpg';
 import after2 from '@/images/after2.jpg';
 
+const progressImages = Object.entries(
+  import.meta.glob('/src/images/progress/*.{jpg,jpeg,png,webp}', {
+    eager: true,
+    import: 'default',
+  }),
+)
+  .map(([path, src]) => {
+    const filename = path.split('/').pop() || '';
+    const order = Number.parseInt(filename, 10) || 0;
+    return { src, filename, order };
+  })
+  .sort((a, b) => a.order - b.order);
+
 function Portfolio() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProject, setSelectedProject] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProgress, setSelectedProgress] = useState(null);
 
   const categories = ['All', 'Kitchen', 'Bathroom', 'Living Room', 'Other'];
 
@@ -44,6 +58,33 @@ function Portfolio() {
     setSelectedProject(project);
     setIsModalOpen(true);
   };
+
+  const handleCloseProgress = () => setSelectedProgress(null);
+
+  const openProgressAt = (index) => {
+    if (progressImages.length === 0) return;
+    const total = progressImages.length;
+    const nextIndex = ((index % total) + total) % total;
+    const nextImage = progressImages[nextIndex];
+    setSelectedProgress({ ...nextImage, index: nextIndex });
+  };
+
+  useEffect(() => {
+    if (!selectedProgress) return;
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setSelectedProgress(null);
+      }
+      if (event.key === 'ArrowRight') {
+        openProgressAt(selectedProgress.index + 1);
+      }
+      if (event.key === 'ArrowLeft') {
+        openProgressAt(selectedProgress.index - 1);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedProgress]);
 
   return (
     <>
@@ -109,6 +150,50 @@ function Portfolio() {
               afterImage={after2}
             />
           </div>
+        </section>
+
+        {/* Progress Gallery */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
+            <div>
+              <p className="text-sm font-semibold text-[#d4af37] uppercase tracking-wider mb-2">
+                Suivi du chantier
+              </p>
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a8a]">
+                L'evolution du projet pas a pas
+              </h2>
+              <p className="text-gray-600 mt-3 max-w-2xl">
+                Visualisez chaque etape du chantier, du debut jusqu'aux finitions.
+              </p>
+            </div>
+          </div>
+
+          {progressImages.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {progressImages.map((image, index) => (
+                <button
+                  type="button"
+                  key={image.filename}
+                  onClick={() => openProgressAt(index)}
+                  className="group bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-md hover:shadow-xl transition-shadow text-left"
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={image.src}
+                      alt={`Etape ${index + 1}`}
+                      loading="lazy"
+                      decoding="async"
+                      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <span className="absolute top-3 left-3 bg-white/90 text-[#1e3a8a] text-xs font-semibold px-3 py-1 rounded-full shadow">
+                      Etape {index + 1}
+                    </span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          )}
         </section>
 
         {/* Filter and Search Section */}
@@ -233,6 +318,69 @@ function Portfolio() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
+
+      {/* Progress Gallery Modal */}
+      <AnimatePresence>
+        {selectedProgress && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 bg-black/70"
+              onClick={handleCloseProgress}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4"
+              onClick={handleCloseProgress}
+            >
+              <div
+                className="relative w-full max-w-5xl bg-white rounded-2xl shadow-2xl overflow-hidden"
+                onClick={(event) => event.stopPropagation()}
+              >
+                <button
+                  type="button"
+                  onClick={() => openProgressAt(selectedProgress.index - 1)}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 bg-white/90 hover:bg-white rounded-full flex items-center justify-center transition-all duration-200 shadow-lg"
+                  aria-label="Image precedente"
+                >
+                  <ChevronLeft className="w-6 h-6 text-gray-700" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => openProgressAt(selectedProgress.index + 1)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 bg-white/90 hover:bg-white rounded-full flex items-center justify-center transition-all duration-200 shadow-lg"
+                  aria-label="Image suivante"
+                >
+                  <ChevronRight className="w-6 h-6 text-gray-700" />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleCloseProgress}
+                  className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center transition-all duration-200 shadow-lg"
+                  aria-label="Fermer la galerie"
+                >
+                  <span className="text-xl leading-none text-gray-700">×</span>
+                </button>
+                <div className="relative">
+                  <img
+                    src={selectedProgress.src}
+                    alt={`Etape ${selectedProgress.index + 1}`}
+                    className="w-full max-h-[80vh] object-contain bg-black"
+                  />
+                  <div className="absolute bottom-4 left-4 bg-white/90 text-[#1e3a8a] text-sm font-semibold px-4 py-2 rounded-full shadow">
+                    Etape {selectedProgress.index + 1}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 }

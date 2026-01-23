@@ -66,12 +66,6 @@ function BeforeAfterSlider({
           style={{ clipPath: `inset(0 ${100 - value}% 0 0)` }}
         />
 
-        <span className="absolute left-4 top-4 bg-white/90 text-gray-900 text-xs font-semibold px-3 py-1 rounded-full shadow">
-          {beforeLabel}
-        </span>
-        <span className="absolute right-4 top-4 bg-white/90 text-gray-900 text-xs font-semibold px-3 py-1 rounded-full shadow">
-          {afterLabel}
-        </span>
 
         <button
           type="button"
