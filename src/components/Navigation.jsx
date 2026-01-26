@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Home, Briefcase, Calendar, Menu, X, MessageCircle } from 'lucide-react';
+import { Home, Briefcase, Calendar, Menu, X, MessageCircle, Mail } from 'lucide-react';
 
 function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -27,11 +27,12 @@ function Navigation() {
 
   const navLinks = [
     { to: '/', label: 'Accueil', icon: Home },
-    { to: '/portfolio', label: 'Projets', icon: Briefcase },
+    { to: '/portfolio', label: 'Nos réalisations', icon: Briefcase },
     { to: '/booking', label: 'Réserver', icon: Calendar }
   ];
 
   const whatsappUrl = "https://wa.me/33762735161";
+  const emailAddress = "info@lapirenov.fr";
 
   const isActive = (path) => location.pathname === path;
 
@@ -143,6 +144,13 @@ function Navigation() {
             >
               <MessageCircle className="w-5 h-5 text-[#25D366]" />
               <span className="font-medium">Contact WhatsApp</span>
+            </a>
+            <a
+              href={`mailto:${emailAddress}`}
+              className="flex items-center space-x-2 px-4 py-3 text-gray-700 hover:bg-blue-50 transition-colors duration-300"
+            >
+              <Mail className="w-5 h-5 text-[#1e3a8a]" />
+              <span className="font-medium">{emailAddress}</span>
             </a>
           </motion.div>
         )}

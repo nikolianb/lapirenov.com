@@ -2,7 +2,6 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import HeroImage from '@/components/HeroImage';
 import ServicesSection from '@/components/ServicesSection';
-import StatsSection from '@/components/StatsSection';
 import WhyChooseUsSection from '@/components/WhyChooseUsSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import FAQSection from '@/components/FAQSection';
@@ -64,19 +63,16 @@ function HomePage() {
         {/* 3. CTA Banner */}
         <CTABanner />
 
-        {/* 4. Stats Section */}
-        <StatsSection />
-
-        {/* 5. Why Choose Us Section */}
+        {/* 4. Why Choose Us Section */}
         <WhyChooseUsSection />
 
-        {/* 6. Testimonials Section */}
+        {/* 5. Testimonials Section */}
         <TestimonialsSection />
 
-        {/* 7. FAQ Section */}
+        {/* 6. FAQ Section */}
         <FAQSection />
 
-        {/* 8. CTA Banner (Secondary) */}
+        {/* 7. CTA Banner (Secondary) */}
         <CTABanner secondary={true} />
       </main>
     </>

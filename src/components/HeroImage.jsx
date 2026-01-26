@@ -86,7 +86,7 @@ const HeroImage = () => {
             onClick={() => navigate('/portfolio')}
             className="group bg-gradient-to-r from-[#d4af37] to-amber-600 hover:from-amber-500 hover:to-amber-500 text-white font-bold px-8 py-7 text-lg rounded-xl shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] transform hover:scale-105 transition-all duration-300 min-w-[200px]"
           >
-            Voir Nos Projets
+            Voir Nos réalisations
             <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
           </Button>
 
