@@ -109,15 +109,19 @@ function Footer() {
             </div>
             <div className="pt-4">
               <p className="text-sm text-blue-200">
-                Raison sociale: LAPI RENOV<br />
-                SIREN: 995 099 702<br />
-                SIRET: 995 099 702 00012<br />
-                TVA: FR55 995099702<br />
-                RCS Bourg-en-Bresse<br />
-                Code NAF/APE: 4329A<br />
-                Forme juridique: EURL<br />
-                Immatriculation: 01/01/2026<br />
-                Commune: Saint-Denis-les-Bourg (Ain)
+                RAVALEMENT DE FA&Ccedil;ADE<br />
+                Enduits<br />
+                Fissures<br />
+                Joints et sablage<br />
+                Nettoyage et traitement<br />
+                Peintures ext&eacute;rieures<br />
+                Ravalement<br />
+                R&eacute;novation Int&eacute;rieure<br />
+                <br />
+                FA&Ccedil;ADIER ENDUISEUR<br />
+                ISOLATION EXT&Eacute;RIEURE<br />
+                Isolation par l'ext&eacute;rieur<br />
+                Isolation Int&eacute;rieure<br />
               </p>
             </div>
           </div>

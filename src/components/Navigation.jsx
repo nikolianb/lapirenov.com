@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Home, Briefcase, Calendar, Menu, X, MessageCircle, Mail } from 'lucide-react';
+import logo from '@/images/logo/lapi_renov_traced.svg';
 
 function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -51,8 +52,16 @@ function Navigation() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
-            <div className="w-10 h-10 bg-gradient-to-br from-[#1e3a8a] to-blue-700 rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-md">
-              <span className="text-[#d4af37] font-bold text-xl">L</span>
+            <div
+              className={`w-16 h-16 rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 ${
+                isScrolled ? 'bg-gradient-to-br from-[#1e3a8a] to-blue-700 shadow-md' : ''
+              }`}
+            >
+              <img
+                src={logo}
+                alt="Lapi Renov"
+                className="w-14 h-14 object-contain"
+              />
             </div>
             <span className={`text-xl font-bold transition-colors duration-300 tracking-tight ${
               isScrolled ? 'text-[#1e3a8a]' : 'text-white'

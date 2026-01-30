@@ -59,7 +59,7 @@ const WhyChooseUsSection = () => {
           transition={{ duration: 0.6 }}
         >
           <span className="text-[#d4af37] font-semibold tracking-wider uppercase text-sm">Pourquoi Nous Choisir</span>
-          <h2 className="text-3xl md:text-5xl font-bold mt-3 mb-6">L'Excellence Lapirenov</h2>
+          <h2 className="text-3xl md:text-5xl font-bold mt-3 mb-6">Lapi Renov</h2>
           <div className="w-24 h-1 bg-[#d4af37] mx-auto rounded-full" />
         </motion.div>
 

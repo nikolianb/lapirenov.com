@@ -75,8 +75,10 @@ const HeroImage = () => {
           variants={itemVariants}
           className="text-xl md:text-2xl text-blue-100 mb-10 max-w-2xl leading-relaxed drop-shadow-md"
         >
-          Expertise, raffinement et qualité supérieure pour vos projets de rénovation les plus ambitieux.
+          <span className="block">Ravalement de Façades</span>
+          <span className="block">Isolation Extérieure</span>
         </motion.p>
+
 
         <motion.div 
           variants={itemVariants}

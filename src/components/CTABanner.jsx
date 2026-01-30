@@ -27,11 +27,9 @@ const CTABanner = ({ secondary = false }) => {
             <Sparkles className="w-6 h-6 text-[#d4af37]" />
           </div>
           
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-            Prêt à Transformer <span className="text-[#d4af37]">Votre Espace?</span>
-          </h2>
           
-          <p className="text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
+          
+          <p className="text-2xl text-blue-100 mb-10 max-w-2xl mx-auto">
             Contactez-nous dès aujourd'hui pour discuter de votre projet de rénovation et obtenir un devis personnalisé.
           </p>
           

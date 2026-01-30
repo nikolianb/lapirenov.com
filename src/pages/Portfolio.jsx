@@ -132,7 +132,7 @@ function Portfolio() {
                 Nos réalisations
               </h1>
               <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-                Explorez notre galerie de rénovations d'exception et inspirez-vous pour votre futur projet.
+                Explorez notre galerie de rénovations et inspirez-vous pour votre futur projet.
               </p>
             </motion.div>
           </div>
