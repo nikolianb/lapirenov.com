@@ -55,19 +55,13 @@ const HeroImage = () => {
         initial="hidden"
         animate="visible"
       >
-        <motion.div variants={itemVariants}>
-          <span className="inline-block px-4 py-1.5 bg-[#d4af37]/20 backdrop-blur-md border border-[#d4af37]/40 text-[#d4af37] font-bold rounded-full mb-6 text-sm tracking-widest uppercase shadow-lg">
-            Rénovation de Luxe Professionnelle
-          </span>
-        </motion.div>
-
         <motion.h1 
           variants={itemVariants}
           className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight max-w-4xl drop-shadow-lg"
         >
-          Transformez 
+          Votre façade,
           <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] via-amber-200 to-[#d4af37]">
-            Votre Espace
+            notre savoir-faire
           </span>
         </motion.h1>
 
