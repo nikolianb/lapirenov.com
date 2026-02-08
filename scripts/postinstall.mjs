@@ -9,6 +9,7 @@ if (!process.env.DB_HOST) {
 }
 
 import { execSync } from 'node:child_process';
+import { copyFileSync } from 'node:fs';
 import { loadEnv } from '../server/lib/env.js';
 
 loadEnv();
@@ -19,4 +20,9 @@ console.log('[postinstall] Production detected — running build...');
 run('prisma migrate deploy');
 run('prisma generate');
 run('vite build');
+
+// Overwrite root index.html with the built version so that
+// Hostinger's static file layer serves the correct production HTML.
+copyFileSync('dist/index.html', 'index.html');
+console.log('[postinstall] Copied dist/index.html → index.html');
 console.log('[postinstall] Build complete.');
