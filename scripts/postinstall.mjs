@@ -9,7 +9,7 @@ if (!process.env.DB_HOST) {
 }
 
 import { execSync } from 'node:child_process';
-import { copyFileSync } from 'node:fs';
+import { unlinkSync } from 'node:fs';
 import { loadEnv } from '../server/lib/env.js';
 
 loadEnv();
@@ -21,8 +21,8 @@ run('prisma migrate deploy');
 run('prisma generate');
 run('vite build');
 
-// Overwrite root index.html with the built version so that
-// Hostinger's static file layer serves the correct production HTML.
-copyFileSync('dist/index.html', 'index.html');
-console.log('[postinstall] Copied dist/index.html → index.html');
+// Remove root index.html so Apache does not serve it as a fallback.
+// The Express server serves the SPA from dist/index.html instead.
+try { unlinkSync('index.html'); } catch {}
+console.log('[postinstall] Removed root index.html');
 console.log('[postinstall] Build complete.');
