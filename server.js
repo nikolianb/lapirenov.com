@@ -1,14 +1,14 @@
+// init-env MUST be the first import — it calls loadEnv() during
+// module evaluation, before PrismaClient reads DATABASE_URL.
+import './server/lib/init-env.js';
 import express from 'express';
 import path from 'path';
 import session from 'express-session';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
-import { loadEnv } from './server/lib/env.js';
 import publicRoutes from './server/routes/public.js';
 import adminRoutes from './server/routes/admin.js';
 import { uploadsAbsolutePath } from './server/lib/uploads.js';
-
-loadEnv();
 
 const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
