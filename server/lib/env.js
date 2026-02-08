@@ -25,7 +25,11 @@ function buildDatabaseUrlFromParts() {
 export function loadEnv() {
   dotenv.config();
 
-  if (!process.env.DATABASE_URL) {
+  // Always build DATABASE_URL from parts when DB vars are present,
+  // so the password is always properly URL-encoded.
+  if (process.env.DB_HOST || process.env.DB_USERNAME) {
+    process.env.DATABASE_URL = buildDatabaseUrlFromParts();
+  } else if (!process.env.DATABASE_URL) {
     process.env.DATABASE_URL = buildDatabaseUrlFromParts();
   }
 

@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run db:deploy-prod:*)",
+      "Bash(tasklist:*)",
+      "Bash(powershell -Command:*)"
+    ]
+  }
+}
