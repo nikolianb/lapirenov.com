@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique @db.VarChar(255)
+  passwordHash String   @map("password_hash") @db.VarChar(255)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("admins")
+}
+
+model Project {
+  id                  Int      @id @default(autoincrement())
+  title               String   @db.VarChar(255)
+  category            String   @db.VarChar(64)
+  image               String   @db.Text
+  images              Json?
+  description         String   @db.Text
+  detailedDescription String   @map("detailed_description") @db.Text
+  timeline            String   @db.VarChar(120)
+  budget              String   @db.VarChar(120)
+  materials           Json
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  @@index([category], map: "idx_projects_category")
+  @@map("projects")
+}

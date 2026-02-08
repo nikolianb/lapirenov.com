@@ -7,6 +7,8 @@ import HomePage from '@/pages/HomePage';
 import Portfolio from '@/pages/Portfolio';
 import BookingPage from '@/pages/BookingPage';
 import BookingConfirmationPage from '@/pages/BookingConfirmationPage';
+import AdminLoginPage from '@/pages/AdminLoginPage';
+import AdminProjectsPage from '@/pages/AdminProjectsPage';
 import WhatsAppWidget from '@/components/WhatsAppWidget';
 import { Toaster } from '@/components/ui/toaster';
 
@@ -49,6 +51,8 @@ const AnimatedRoutes = () => {
             </PageTransition>
           } 
         />
+        <Route path="/admin/login" element={<AdminLoginPage />} />
+        <Route path="/admin/projects" element={<AdminProjectsPage />} />
       </Routes>
     </AnimatePresence>
   );
@@ -78,19 +82,28 @@ const PageTransition = ({ children }) => {
   );
 };
 
+const AppShell = () => {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
+
+  return (
+    <div className="flex flex-col min-h-screen font-sans text-gray-900 antialiased selection:bg-blue-100 selection:text-[#1e3a8a]">
+      {!isAdminRoute && <Navigation />}
+
+      <AnimatedRoutes />
+
+      {!isAdminRoute && <Footer />}
+      {!isAdminRoute && <WhatsAppWidget />}
+      <Toaster />
+    </div>
+  );
+};
+
 function App() {
   return (
     <Router>
       <ScrollToTop />
-      <div className="flex flex-col min-h-screen font-sans text-gray-900 antialiased selection:bg-blue-100 selection:text-[#1e3a8a]">
-        <Navigation />
-        
-        <AnimatedRoutes />
-
-        <Footer />
-        <WhatsAppWidget />
-        <Toaster />
-      </div>
+      <AppShell />
     </Router>
   );
 }

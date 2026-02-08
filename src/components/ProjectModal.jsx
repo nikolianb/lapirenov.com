@@ -1,11 +1,62 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Calendar, DollarSign, Package } from 'lucide-react';
+import { X, Calendar, DollarSign, Package, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
+function getProjectImages(project) {
+  const imagesFromArray = Array.isArray(project?.images) ? project.images : [];
+  const normalizedImages = imagesFromArray
+    .map((image) => (typeof image === 'string' ? image.trim() : ''))
+    .filter(Boolean);
+
+  if (normalizedImages.length > 0) {
+    return [...new Set(normalizedImages)];
+  }
+
+  const fallbackImage = typeof project?.image === 'string' ? project.image.trim() : '';
+  return fallbackImage ? [fallbackImage] : [];
+}
+
 function ProjectModal({ project, isOpen, onClose }) {
   const navigate = useNavigate();
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+
+  const projectImages = useMemo(() => getProjectImages(project), [project]);
+  const hasGallery = projectImages.length > 1;
+  const activeImage = projectImages[activeImageIndex] || '';
+
+  const showNextImage = () => {
+    if (!hasGallery) return;
+    setActiveImageIndex((prev) => (prev + 1) % projectImages.length);
+  };
+
+  const showPreviousImage = () => {
+    if (!hasGallery) return;
+    setActiveImageIndex((prev) => (prev - 1 + projectImages.length) % projectImages.length);
+  };
+
+  useEffect(() => {
+    setActiveImageIndex(0);
+  }, [project?.id, isOpen]);
+
+  useEffect(() => {
+    if (!isOpen || !hasGallery) {
+      return undefined;
+    }
+
+    const onKeyDown = (event) => {
+      if (event.key === 'ArrowRight') {
+        setActiveImageIndex((prev) => (prev + 1) % projectImages.length);
+      }
+      if (event.key === 'ArrowLeft') {
+        setActiveImageIndex((prev) => (prev - 1 + projectImages.length) % projectImages.length);
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isOpen, hasGallery, projectImages.length]);
 
   if (!project) return null;
 
@@ -28,13 +79,18 @@ function ProjectModal({ project, isOpen, onClose }) {
           />
 
           {/* Modal */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed inset-4 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-4xl z-50 bg-white rounded-2xl shadow-2xl overflow-hidden"
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            onClick={onClose}
           >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              className="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden"
+              onClick={(event) => event.stopPropagation()}
+            >
             {/* Close Button */}
             <button
               onClick={onClose}
@@ -48,13 +104,33 @@ function ProjectModal({ project, isOpen, onClose }) {
               {/* Hero Image */}
               <div className="relative h-64 md:h-96 overflow-hidden">
                 <img
-                  src={project.image}
+                  src={activeImage}
                   alt={project.title}
                   loading="lazy"
                   decoding="async"
                   sizes="(min-width: 768px) 960px, 100vw"
                   className="w-full h-full object-cover"
                 />
+                {hasGallery && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={showPreviousImage}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white/85 hover:bg-white rounded-full flex items-center justify-center shadow-lg"
+                      aria-label="Image precedente"
+                    >
+                      <ChevronLeft className="w-5 h-5 text-gray-800" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={showNextImage}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white/85 hover:bg-white rounded-full flex items-center justify-center shadow-lg"
+                      aria-label="Image suivante"
+                    >
+                      <ChevronRight className="w-5 h-5 text-gray-800" />
+                    </button>
+                  </>
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <span className="inline-block px-4 py-1.5 bg-amber-600 text-white text-sm font-semibold rounded-full mb-3">
@@ -63,8 +139,39 @@ function ProjectModal({ project, isOpen, onClose }) {
                   <h2 className="text-3xl md:text-4xl font-bold text-white">
                     {project.title}
                   </h2>
+                  {hasGallery && (
+                    <p className="mt-2 text-sm text-white/90 font-medium">
+                      Image {activeImageIndex + 1} / {projectImages.length}
+                    </p>
+                  )}
                 </div>
               </div>
+
+              {hasGallery && (
+                <div className="px-6 pt-4">
+                  <div className="flex gap-2 overflow-x-auto pb-1">
+                    {projectImages.map((image, index) => (
+                      <button
+                        key={`${image}-${index}`}
+                        type="button"
+                        onClick={() => setActiveImageIndex(index)}
+                        className={`shrink-0 rounded-md overflow-hidden border-2 ${
+                          index === activeImageIndex ? 'border-amber-500' : 'border-transparent'
+                        }`}
+                        aria-label={`Afficher image ${index + 1}`}
+                      >
+                        <img
+                          src={image}
+                          alt={`${project.title} ${index + 1}`}
+                          className="h-16 w-24 object-cover"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Content */}
               <div className="p-6 md:p-8 space-y-8">
@@ -136,7 +243,8 @@ function ProjectModal({ project, isOpen, onClose }) {
                 </div>
               </div>
             </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </>
       )}
     </AnimatePresence>

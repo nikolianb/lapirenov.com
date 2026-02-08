@@ -2,11 +2,12 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
-import { projectsData } from '@/data/projectData';
+import { projectsData as fallbackProjectsData } from '@/data/projectData';
 import ProjectModal from '@/components/ProjectModal';
 import { Button } from '@/components/ui/button';
 import Breadcrumb from '@/components/Breadcrumb';
 import BeforeAfterSlider from '@/components/BeforeAfterSlider';
+import { getProjects } from '@/lib/api';
 import before1 from '@/images/before1.jpg';
 import after1 from '@/images/after1.jpg';
 import before2 from '@/images/before2.jpg';
@@ -25,12 +26,32 @@ const progressImages = Object.entries(
   })
   .sort((a, b) => a.order - b.order);
 
+function getProjectCoverImage(project) {
+  if (Array.isArray(project?.images)) {
+    const firstImage = project.images.find(
+      (image) => typeof image === 'string' && image.trim().length > 0,
+    );
+    if (firstImage) {
+      return firstImage;
+    }
+  }
+
+  if (typeof project?.image === 'string' && project.image.trim().length > 0) {
+    return project.image;
+  }
+
+  return '';
+}
+
 function Portfolio() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProject, setSelectedProject] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProgress, setSelectedProgress] = useState(null);
+  const [projects, setProjects] = useState(fallbackProjectsData);
+  const [isLoadingProjects, setIsLoadingProjects] = useState(true);
+  const [projectsError, setProjectsError] = useState('');
 
   const categories = ['All', 'Kitchen', 'Bathroom', 'Living Room', 'Other'];
 
@@ -44,7 +65,7 @@ function Portfolio() {
 
   const filteredProjects = useMemo(() => {
     const normalizedQuery = searchQuery.trim().toLowerCase();
-    return projectsData.filter((project) => {
+    return projects.filter((project) => {
       const matchesCategory =
         selectedCategory === 'All' || project.category === selectedCategory;
       const matchesSearch =
@@ -52,7 +73,7 @@ function Portfolio() {
         project.description.toLowerCase().includes(normalizedQuery);
       return matchesCategory && matchesSearch;
     });
-  }, [selectedCategory, searchQuery]);
+  }, [projects, selectedCategory, searchQuery]);
 
   const handleViewDetails = (project) => {
     setSelectedProject(project);
@@ -85,6 +106,35 @@ function Portfolio() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedProgress]);
+
+  useEffect(() => {
+    let mounted = true;
+
+    const loadProjects = async () => {
+      setIsLoadingProjects(true);
+      try {
+        const response = await getProjects();
+        if (!mounted) return;
+        if (Array.isArray(response.projects)) {
+          setProjects(response.projects);
+        }
+        setProjectsError('');
+      } catch (error) {
+        if (!mounted) return;
+        setProjectsError(error.message || 'Chargement API impossible.');
+      } finally {
+        if (mounted) {
+          setIsLoadingProjects(false);
+        }
+      }
+    };
+
+    loadProjects();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   return (
     <>
@@ -251,6 +301,18 @@ function Portfolio() {
             Affichage de {filteredProjects.length} projet{filteredProjects.length !== 1 ? 's' : ''}
           </div>
 
+          {isLoadingProjects && (
+            <div className="mb-6 text-sm font-medium text-blue-700">
+              Chargement des projets depuis la base de donnees...
+            </div>
+          )}
+
+          {projectsError && (
+            <div className="mb-6 text-sm font-medium text-amber-700">
+              API indisponible, affichage des donnees locales. Detail: {projectsError}
+            </div>
+          )}
+
           {/* Projects Grid */}
           <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <AnimatePresence>
@@ -266,7 +328,7 @@ function Portfolio() {
                   {/* Project Image */}
                   <div className="relative h-64 overflow-hidden">
                     <img
-                      src={project.image}
+                      src={getProjectCoverImage(project)}
                       alt={project.title}
                       loading="lazy"
                       decoding="async"
