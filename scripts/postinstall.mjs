@@ -9,10 +9,24 @@ if (!process.env.DB_HOST) {
 }
 
 import { execSync } from 'node:child_process';
-import { unlinkSync } from 'node:fs';
+import { writeFileSync, unlinkSync } from 'node:fs';
 import { loadEnv } from '../server/lib/env.js';
 
 loadEnv();
+
+// Write a .env file so the server can read it at runtime.
+// Passenger does not forward Hostinger panel env vars to the Node process.
+const envKeys = [
+  'DB_CONNECTION', 'DB_HOST', 'DB_PORT', 'DB_DATABASE',
+  'DB_USERNAME', 'DB_PASSWORD', 'DATABASE_URL',
+  'SESSION_SECRET', 'ADMIN_EMAIL', 'ADMIN_PASSWORD',
+  'NODE_ENV', 'PORT',
+];
+const envLines = envKeys
+  .filter((key) => process.env[key])
+  .map((key) => `${key}=${process.env[key]}`);
+writeFileSync('.env', envLines.join('\n') + '\n');
+console.log(`[postinstall] Wrote .env with ${envLines.length} vars`);
 
 const run = (cmd) => execSync(cmd, { stdio: 'inherit', env: process.env });
 
