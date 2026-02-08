@@ -9,7 +9,7 @@ if (!process.env.DB_HOST) {
 }
 
 import { execSync } from 'node:child_process';
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, unlinkSync } from 'node:fs';
 import { loadEnv } from '../server/lib/env.js';
 
 loadEnv();
@@ -35,4 +35,6 @@ run('prisma migrate deploy');
 run('prisma generate');
 run('vite build');
 
+// Remove root index.html after vite build so Apache does not serve it as a fallback.
+try { unlinkSync('index.html'); } catch {}
 console.log('[postinstall] Build complete.');
