@@ -10,7 +10,7 @@
     "postinstall": "node scripts/postinstall.mjs",
     "build": "node scripts/prisma-with-env.mjs prisma migrate deploy && node scripts/prisma-with-env.mjs prisma generate && vite build",
     "build:vite": "vite build",
-    "start": "node server.js",
+    "start": "node start.js",
     "preview": "vite preview --host :: --port 3000",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev --name init",

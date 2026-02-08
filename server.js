@@ -71,18 +71,4 @@ app.use((error, req, res, next) => {
 const port = Number(process.env.PORT) || 3000;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
-  // Write diagnostic file so we can verify server started
-  const diagnostic = {
-    started: new Date().toISOString(),
-    port,
-    distExists: fs.existsSync(distPath),
-    env: {
-      NODE_ENV: process.env.NODE_ENV,
-      PORT: process.env.PORT,
-      DB_HOST: process.env.DB_HOST,
-      DATABASE_URL: process.env.DATABASE_URL ? 'set' : 'missing',
-      SESSION_SECRET: process.env.SESSION_SECRET ? 'set' : 'missing',
-    },
-  };
-  fs.writeFileSync(path.join(distPath, '_diagnostic.json'), JSON.stringify(diagnostic, null, 2));
 });
