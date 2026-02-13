@@ -3,7 +3,24 @@
     "allow": [
       "Bash(npm run db:deploy-prod:*)",
       "Bash(tasklist:*)",
-      "Bash(powershell -Command:*)"
+      "Bash(powershell -Command:*)",
+      "Bash(git -C \"c:\\\\Users\\\\User\\\\Documents\\\\projketet\\\\lapirenov\" status)",
+      "Bash(git -C \"c:\\\\Users\\\\User\\\\Documents\\\\projketet\\\\lapirenov\" diff)",
+      "Bash(git -C \"c:\\\\Users\\\\User\\\\Documents\\\\projketet\\\\lapirenov\" log --oneline -5)",
+      "Bash(git -C \"c:\\\\Users\\\\User\\\\Documents\\\\projketet\\\\lapirenov\" add package.json server.js server/lib/init-env.js start.js)",
+      "Bash(git -C \"c:\\\\Users\\\\User\\\\Documents\\\\projketet\\\\lapirenov\" commit -m \"$\\(cat <<''EOF''\nfix: remove diagnostic writeFileSync calls that crash server on Hostinger\n\nThe diagnostic file writes \\(server-init.json, _diagnostic.json, startup-error.json\\)\nwere causing the server to crash on Hostinger due to write permission errors.\nAlso aligned start script in package.json with the Hostinger entry file \\(start.js\\).\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git -C \"c:\\\\Users\\\\User\\\\Documents\\\\projketet\\\\lapirenov\" push)",
+      "WebFetch(domain:lapirenov.com)",
+      "Bash(git -C \"c:\\\\Users\\\\User\\\\Documents\\\\projketet\\\\lapirenov\" ls-files uploads/)",
+      "Bash(git -C \"c:\\\\Users\\\\User\\\\Documents\\\\projketet\\\\lapirenov\" add scripts/postinstall.mjs)",
+      "Bash(git -C \"c:\\\\Users\\\\User\\\\Documents\\\\projketet\\\\lapirenov\" commit -m \"$\\(cat <<''EOF''\nfix: delete root index.html in production to stop Apache fallback\n\nApache on Hostinger serves the root index.html as a fallback for all\nrequests, intercepting /api/* before they reach the Node.js process.\nNow postinstall deletes it so all requests go through Express.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(timeout:*)",
+      "Bash(git -C \"c:\\\\Users\\\\User\\\\Documents\\\\projketet\\\\lapirenov\" add server.js)",
+      "Bash(git -C \"c:\\\\Users\\\\User\\\\Documents\\\\projketet\\\\lapirenov\" commit -m \"$\\(cat <<''EOF''\nfix: start server before loading routes to diagnose crash\n\nRegister /api/health before dynamically importing routes so the\nhealth endpoint works even if a route import fails. Reports the\nactual error message via the health endpoint for diagnosis.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git -C \"c:\\\\Users\\\\User\\\\Documents\\\\projketet\\\\lapirenov\" add server.js start.js)",
+      "Bash(git -C \"c:\\\\Users\\\\User\\\\Documents\\\\projketet\\\\lapirenov\" commit -m \"$\\(cat <<''EOF''\nfix: remove top-level await from start.js and server.js\n\nHostinger''s Node runner may not support top-level await. Reverted\nserver.js to static imports and start.js to promise-based error\nhandling. The writeFileSync crash is already fixed.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git -C \"c:\\\\Users\\\\User\\\\Documents\\\\projketet\\\\lapirenov\" rm --cached index.html)",
+      "Bash(git -C \"c:\\\\Users\\\\User\\\\Documents\\\\projketet\\\\lapirenov\" add index.html)"
     ]
   }
 }

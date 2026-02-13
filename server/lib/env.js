@@ -37,12 +37,8 @@ export function loadEnv() {
     process.env.SESSION_SECRET = 'change-me-in-production';
   }
 
-  if (!process.env.ADMIN_EMAIL) {
-    process.env.ADMIN_EMAIL = 'owner@lapirenov.com';
-  }
-
-  if (!process.env.ADMIN_PASSWORD) {
-    process.env.ADMIN_PASSWORD = 'ChangeMe123!';
+  if (!process.env.ADMIN_EMAIL || !process.env.ADMIN_PASSWORD) {
+    throw new Error('ADMIN_EMAIL and ADMIN_PASSWORD must be set in environment');
   }
 }
 
