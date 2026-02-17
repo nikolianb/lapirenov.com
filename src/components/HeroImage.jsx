@@ -60,7 +60,7 @@ const HeroImage = () => {
           className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight max-w-4xl drop-shadow-lg"
         >
           Votre façade,
-          <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] via-amber-200 to-[#d4af37]">
+          <span className="block text-white">
             notre savoir-faire
           </span>
         </motion.h1>
